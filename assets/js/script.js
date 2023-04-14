@@ -16,4 +16,15 @@ startButtonEL.addEventListener("click", function(){
     startButtonEL.style.display = "none"
 })
 
+var questionsList = [
+    {
+        question:"what is html?",
+        choices:["opt1","opt2","opt3",'opt4'],
+        correct:"opt1"
+    
+    }
+]
+
+
+
 
