@@ -5,6 +5,8 @@ var timerObject;
 var timerCounter = 50;
 var startButtonEL = document.getElementById("start-button")
 
+var answerAlertEL = document.getElementById("alert-answer")
+
 var questionsList = [
     {
         question: "what does HTML stand for?",
@@ -54,14 +56,23 @@ for (var i = 0; i < choiceButtons.length; i++) {
     choiceButtons[i].addEventListener("click", function () {
         if (this.textContent === questionsList[questionIndex].correct) {
             score++;
+            answerAlertEL.textContent = "Correct"
+        } else {
+            timerCounter -= 5
+            answerAlertEL.textContent = "Incorrect"
+
         }
+        setTimeout(function(){
+            answerAlertEL.textContent = ""
+
+        },1000)
         questionIndex++;
         if (questionIndex === questionsList.length) {
             endQuiz();
         } else {
             populateQuestion();
         }
-    
+
     });
 }
 
@@ -78,8 +89,8 @@ function endQuiz() {
     updateScore();
 }
 
-startButtonEL.addEventListener("click", function() {
-    timerObject = setInterval(function() {
+startButtonEL.addEventListener("click", function () {
+    timerObject = setInterval(function () {
         timerEL.innerText = "Time Left: " + timerCounter;
         if (timerCounter > 0) {
             timerCounter--;
