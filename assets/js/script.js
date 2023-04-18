@@ -4,8 +4,9 @@ var timerEL = document.querySelector(".timer")
 var timerObject;
 var timerCounter = 50;
 var startButtonEL = document.getElementById("start-button")
-
+var highScoreformEL = document.getElementById("high-score-form")
 var answerAlertEL = document.getElementById("alert-answer")
+highScoreformEL.style.display="none"
 
 var questionsList = [
     {
@@ -86,6 +87,7 @@ function updateScore() {
 function endQuiz() {
     clearInterval(timerObject);
     multiplechoiceEl.style.display = "none";
+    highScoreformEL.style.display = "block";
     updateScore();
 }
 
@@ -105,3 +107,13 @@ startButtonEL.addEventListener("click", function () {
 
 
 
+document.getElementById("save-user-score").addEventListener("click",function(){
+    var user = document.getElementById("user-input").value
+    var scoreBoard = JSON.parse(localStorage.getItem("codeQuiz")) || []
+    scoreBoard.push({
+        user:user,
+        score: timerCounter + score
+    })
+    localStorage.setItem("codeQuiz",JSON.stringify(scoreBoard))
+
+})
