@@ -5,17 +5,6 @@ var timerObject;
 var timerCounter = 50;
 var startButtonEL = document.getElementById("start-button")
 
-startButtonEL.addEventListener("click", function () {
-    timerObject = setInterval(function () {
-        timerEL.innerText = "Time Left: " + timerCounter //49 on 
-        if (timerCounter > 0) {
-            timerCounter--//48 timerCounter =timerCounter-1
-        }
-    }, 1000)
-    multiplechoiceEl.style.display = "block"
-    startButtonEL.style.display = "none"
-})
-
 var questionsList = [
     {
         question: "what does HTML stand for?",
@@ -35,7 +24,7 @@ var questionsList = [
     },
     {
         question: "What is the DOM?",
-        choices: ["The lead guy form fast and furious", "A weapon", "Decimal Only Math", "Document Object Model"],
+        choices: ["The lead guy from fast and furious", "A weapon", "Decimal Only Math", "Document Object Model"],
         correct: "Document Object Model"
     },
     {
@@ -49,7 +38,7 @@ var questionsList = [
 
 
 var questionIndex = 0;
-var questionEl = documentdocument.getElementById("question");
+var questionEl = document.getElementById("question");
 var choiceButtons = document.querySelectorAll("#multiple-choice button");
 var score = 0;
 
@@ -61,9 +50,47 @@ function populateQuestion() {
 
 }
 
+for (var i = 0; i < choiceButtons.length; i++) {
+    choiceButtons[i].addEventListener("click", function () {
+        if (this.textContent === questionsList[questionIndex].correct) {
+            score++;
+        }
+        questionIndex++;
+        if (questionIndex === questionsList.length) {
+            endQuiz();
+        } else {
+            populateQuestion();
+        }
+    
+    });
+}
 
+function updateScore() {
+    var scoreEl = document.createElement("div");
+    scoreEl.textContent = "Score: " + score;
+    scoreEl.classList.add("score");
+    document.body.appendChild(scoreEl);
+}
 
+function endQuiz() {
+    clearInterval(timerObject);
+    multiplechoiceEl.style.display = "none";
+    updateScore();
+}
 
+startButtonEL.addEventListener("click", function() {
+    timerObject = setInterval(function() {
+        timerEL.innerText = "Time Left: " + timerCounter;
+        if (timerCounter > 0) {
+            timerCounter--;
+        } else {
+            endQuiz();
+        }
+    }, 1000);
+    populateQuestion();
+    multiplechoiceEl.style.display = "block";
+    startButtonEL.style.display = "none";
+});
 
 
 
