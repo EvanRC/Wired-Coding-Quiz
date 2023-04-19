@@ -1,12 +1,12 @@
-var multiplechoiceEl = document.getElementById("multiple-choice")
-multiplechoiceEl.style.display = "none"
-var timerEL = document.querySelector(".timer")
-var timerObject;
-var timerCounter = 50;
-var startButtonEL = document.getElementById("start-button")
-var highScoreformEL = document.getElementById("high-score-form")
-var answerAlertEL = document.getElementById("alert-answer")
-highScoreformEL.style.display="none"
+var multiplechoiceEl = document.getElementById("multiple-choice") // creates variable for multiple choice container and referenced to html element by get element by id method.
+multiplechoiceEl.style.display = "none" //hides multiple choice 
+var timerEL = document.querySelector(".timer") // creates variable and stores timer class reference within it.
+var timerObject; // creates timerObject variable
+var timerCounter = 50; //creates timer counter of 50 seconds
+var startButtonEL = document.getElementById("start-button") //creates a variable for start button and retrieves reference to related html element and is stored within that variable
+var highScoreformEL = document.getElementById("high-score-form") //creates element for high score form
+var answerAlertEL = document.getElementById("alert-answer") //creates variable for an alert regarding the right or wrong answer
+highScoreformEL.style.display="none" //hides high score form
 
 var questionsList = [
     {
@@ -38,13 +38,14 @@ var questionsList = [
     }
 
 ];
+// ^creates a list of questions for the quiz and their answers, plus specifies the correct answer
 
 
 var questionIndex = 0;
 var questionEl = document.getElementById("question");
 var choiceButtons = document.querySelectorAll("#multiple-choice button");
 var score = 0;
-
+var scoreDispEl = document.getElementById("score-display")
 function populateQuestion() {
     questionEl.textContent = questionsList[questionIndex].question;
     for (var i = 0; i < choiceButtons.length; i++) {
@@ -52,6 +53,7 @@ function populateQuestion() {
     }
 
 }
+// this creates a function to populate the html multiple choice section with the data from the question list variable
 
 for (var i = 0; i < choiceButtons.length; i++) {
     choiceButtons[i].addEventListener("click", function () {
@@ -60,36 +62,30 @@ for (var i = 0; i < choiceButtons.length; i++) {
             answerAlertEL.textContent = "Correct"
         } else {
             timerCounter -= 5
-            answerAlertEL.textContent = "Incorrect"
+            answerAlertEL.textContent = "Incorrect" // knocks score down by 5 if incorecct answer givin
 
         }
         setTimeout(function(){
             answerAlertEL.textContent = ""
 
-        },1000)
+        },1000) //creates a limited window for alert message to appear. 
         questionIndex++;
         if (questionIndex === questionsList.length) {
             endQuiz();
         } else {
-            populateQuestion();
-        }
+            populateQuestion(); 
+        } // manages whether to move on to then ext question or end the quiz based on the number of questions left
 
     });
 }
 
-function updateScore() {
-    var scoreEl = document.createElement("div");
-    scoreEl.textContent = "Score: " + score;
-    scoreEl.classList.add("score");
-    document.body.appendChild(scoreEl);
-}
 
 function endQuiz() {
     clearInterval(timerObject);
     multiplechoiceEl.style.display = "none";
     highScoreformEL.style.display = "block";
-    updateScore();
-}
+    document.getElementById("score-display").innerText = "Your score is:" + timerCounter
+}//ends the quiz and shows the final score
 
 startButtonEL.addEventListener("click", function () {
     timerObject = setInterval(function () {
@@ -102,8 +98,8 @@ startButtonEL.addEventListener("click", function () {
     }, 1000);
     populateQuestion();
     multiplechoiceEl.style.display = "block";
-    startButtonEL.style.display = "none";
-});
+    startButtonEL.style.display = "none"; 
+}); // starts the quiz and displays the mutiple choice quiz and hides the start button
 
 
 
@@ -116,4 +112,4 @@ document.getElementById("save-user-score").addEventListener("click",function(){
     })
     localStorage.setItem("codeQuiz",JSON.stringify(scoreBoard))
 
-})
+})//saves a players score and name to local storage
