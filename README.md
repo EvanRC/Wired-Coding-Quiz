@@ -10,7 +10,7 @@ N/A
 Used to test users on some basic knowledge for coding.
 
 ## Credits:
-- My tutor Sangeetha Kaliaperumal walked me through both a lot html and the JavaScript portions of the code.
+- My tutor Sangeetha Kaliaperumal walked me through both a lot of the HTML and the JavaScript portions of the code.
 - Getbootstrap.com
 
 ## License:
